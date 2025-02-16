@@ -3,7 +3,7 @@ name: Java CI
 on:
   push:
     branches:
-      - [Your Branch]
+      - Thanawich_6587017
 
 jobs:
   build:
@@ -23,6 +23,6 @@ jobs:
 
     - name: Compile Java
       run: |
-        cd [Your Branch]/HolidayTravelVehicles 
+        cd Thanawich_6587017/HolidayTravelVehicles 
         javac -d . *.java
       # Compile java file from directory
