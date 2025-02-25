@@ -93,5 +93,5 @@
 ![ITDS361_All Diagram - 5  Access collected astronomical data-1](https://github.com/user-attachments/assets/54f68eef-3963-4411-a1a0-869809f9e29c)
 ![ITDS361_All Diagram - 5  Access collected astronomical data-2](https://github.com/user-attachments/assets/8a840349-5f3f-47e7-b025-4509b646f94f)
 
--
+---
 ![ITDS361_All Diagram - Class Diagram](https://github.com/user-attachments/assets/ee0ff8d4-8541-42b0-bcd6-2dc433f78ae1)
