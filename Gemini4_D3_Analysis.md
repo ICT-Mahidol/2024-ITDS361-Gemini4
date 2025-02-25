@@ -1,5 +1,3 @@
-![ITDS361_All Diagram - 3  Manage astronomical data – Science Observer](https://github.com/user-attachments/assets/c2f68f7b-129a-478f-883b-94edeb384224)# Use case description
-
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Install new configurations to the system |
@@ -54,7 +52,7 @@
 | **Subflows**             | **S-1: แก้ไขข้อมูล** <br> 1. เลือกข้อมูลที่จะทำการแก้ไข <br> 2. แก้ไขข้อมูล <br> 3. บันทึกข้อมูล <br> **S-2: ลบข้อมูล** <br> 1. เลือกข้อมูลที่จะทำการลบ <br> 2. ลบข้อมูล <br> 3. บันทึกข้อมูล <br> **S-3: กำหนดหมวดหมู่หรือจัดกลุ่มข้อมูล** <br> 1. เลือกข้อมูล <br> 2. สร้างประเภท(หากยังไม่มี) <br> 3. กำหนดหัวข้อหรือประเภทข้อมูล |
 | **Alternate/Exceptional Flow** | - ไม่มีข้อมูลที่เลือกอยู่บนระบบ <br> - ข้อมูลของผู้ใช้เข้าสู่ระบบไม่ถูกต้องหรือไม่มีอยู่ |
 
-![ITDS361_All Diagra![ITDS361_All Diagram - 3  Manage astronomical data – Science Observer](https://github.com/user-attachments/assets/87d4d5dd-55f6-46cf-aa81-36d0f1551c85)
+![ITDS361_All Diagra![ITDS361_All Diagram - 3  Manage astronomical data – Science Observer](https://github.com/user-attachments/assets/c2f68f7b-129a-478f-883b-94edeb384224)
 ![ITDS361_All Diagram - 3  Manage astronomical data – Science Observer-2](https://github.com/user-attachments/assets/55c3d30a-4e70-43b9-82e0-7a1fde5ab4ab)
 
 | **Element**              | **Description** |
