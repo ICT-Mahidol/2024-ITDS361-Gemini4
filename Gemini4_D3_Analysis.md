@@ -18,7 +18,7 @@
 
 ![ITDS361_All Diagram - 1  Install new configuration Support-1](https://github.com/user-attachments/assets/42ef336c-5d99-480f-9794-d5a6ed937dbe)
 ![ITDS361_All Diagram - 1  Install new configuration Support-2](https://github.com/user-attachments/assets/98b36c2a-f740-4c75-bf78-fcf45eef1144)
----
+-----
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Operate the interactive observing (virtual telescope) |
@@ -37,7 +37,7 @@
 
 ![ITDS361_All Diagram - 2  Operate the interactive observing-1](https://github.com/user-attachments/assets/b3c0d2ca-951b-429c-9d2c-18cb5dbd8cb8)
 ![ITDS361_All Diagram - 2  Operate the interactive observing](https://github.com/user-attachments/assets/5928e794-9c0a-49ef-90e7-1f0b45f178ce)
----
+-----
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Manage astronomical data |
@@ -56,7 +56,7 @@
 
 ![ITDS361_All Diagra - 3  Manage astronomical data – Science Observer](https://github.com/user-attachments/assets/c2f68f7b-129a-478f-883b-94edeb384224)
 ![ITDS361_All Diagram - 3  Manage astronomical data – Science Observer-2](https://github.com/user-attachments/assets/55c3d30a-4e70-43b9-82e0-7a1fde5ab4ab)
----
+-----
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Control the telescope via the command line |
@@ -75,7 +75,7 @@
 
 ![ITDS361_All Diagram - 4  Control the telescope via the command line-1](https://github.com/user-attachments/assets/a24c1015-2e28-4286-9f9f-b02e88c07bd6)
 ![ITDS361_All Diagram - 4  Control the telescope via the command line-2](https://github.com/user-attachments/assets/aa54604d-3b88-4a7e-8744-6c61e2bc7e87)
----
+-----
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Access collected astronomical data |
@@ -94,6 +94,6 @@
 
 ![ITDS361_All Diagram - 5  Access collected astronomical data-1](https://github.com/user-attachments/assets/54f68eef-3963-4411-a1a0-869809f9e29c)
 ![ITDS361_All Diagram - 5  Access collected astronomical data-2](https://github.com/user-attachments/assets/8a840349-5f3f-47e7-b025-4509b646f94f)
----
+-----
 ## Class Diagram
 ![ITDS361_All Diagram - Class Diagram](https://github.com/user-attachments/assets/ee0ff8d4-8541-42b0-bcd6-2dc433f78ae1)
