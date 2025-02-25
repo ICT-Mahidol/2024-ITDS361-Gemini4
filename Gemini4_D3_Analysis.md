@@ -1,6 +1,5 @@
 # Use case description
 
-## Install new configurations to the system
 | **Element**              | **Description** |
 |--------------------------|-----------------|
 | **Use Case Name**        | Install new configurations to the system |
