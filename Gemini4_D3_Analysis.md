@@ -49,6 +49,23 @@
 | **Subflows**             | **S-1: แก้ไขข้อมูล** <br> 1. เลือกข้อมูลที่จะทำการแก้ไข <br> 2. แก้ไขข้อมูล <br> 3. บันทึกข้อมูล <br> **S-2: ลบข้อมูล** <br> 1. เลือกข้อมูลที่จะทำการลบ <br> 2. ลบข้อมูล <br> 3. บันทึกข้อมูล <br> **S-3: กำหนดหมวดหมู่หรือจัดกลุ่มข้อมูล** <br> 1. เลือกข้อมูล <br> 2. สร้างประเภท(หากยังไม่มี) <br> 3. กำหนดหัวข้อหรือประเภทข้อมูล |
 | **Alternate/Exceptional Flow** | - ไม่มีข้อมูลที่เลือกอยู่บนระบบ <br> - ข้อมูลของผู้ใช้เข้าสู่ระบบไม่ถูกต้องหรือไม่มีอยู่ |
 
+| **Element**              | **Description** |
+|--------------------------|-----------------|
+| **Use Case Name**        | Control the telescope via the command line |
+| **ID**                   | 04 |
+| **Importance Level**     | High |
+| **Primary Actor**        | Telescope Operator |
+| **Use Case Type**        | Detail, Essential |
+| **Stakeholders and Interests** | - **Telescope Operator**: ต้องสามารถควบคุมกล้องโทรทรรศน์ได้ผ่าน command line ได้อย่างปลอดภัยและมีประสิทธิภาพ <br> - **Science Observer**: ต้องสามารถควบคุมกล้องโทรทรรศน์ทาง observing program ได้ <br> - **Administrator**: ต้องการให้ระบบสามารถรักษาความปลอดภัยและการเข้าถึงของผู้ใช้ตาม access mode และ operational level ที่กำหนด <br> - **Astronomer**: ต้องสามารถเข้าดู live view ของกล้องโทรทรรศน์ได้ |
+| **Brief Description**    | เป็น use case ที่อธิบายการควบคุมกล้องโทรทรรศน์ผ่าน command line |
+| **Trigger**              | Telescope Operator ต้องการสั่งการเริ่มต้นหรือเปลี่ยนสถานะกล้องโทรทรรศน์ |
+| **Type**                 | External |
+| **Relationships**        | **Association**: Telescope operator |
+| **Normal Flow of Events**| 1. Telescope Operator เปิด Command Line Interface (CLI) ของระบบควบคุมกล้อง <br> 2. Telescope Operator ลงชื่อเข้าใช้ (Username, Password) บน CLI <br> 3. ระบบตรวจสอบความถูกต้องของผู้ใช้ <br> 4. ระบบเข้าสู่หน้า Command Line Interface (CLI) <br> 5. Telescope Operator ป้อนคำสั่งควบคุมกล้องตามขั้นตอน (S-1, S-2, S-3, S-4) <br> 6. ระบบดำเนินการตามคำสั่ง <br> 7. ระบบแจ้งผลลัพธ์ของคำสั่งบน CLI ให้ Telescope Operator <br> 8. Telescope Operator สามารถพิมพ์คำสั่งเพิ่มเติมหรือออกจาก CLI ได้ |
+| **Subflows**             | **S-1: เปิด/ปิดระบบ** <br> - ป้อนคำสั่งเพื่อเปิด (start telescope) หรือปิดระบบ (shutdown telescope) <br> - ระบบบันทึกผลคำสั่ง <br> - ระบบประมวลผลการเปิดหรือปิดกล้องโทรทรรศน์ <br> **S-2: ตรวจเช็คสถานะกล้อง** <br> - ป้อนคำสั่งตรวจสอบสถานะ (check status) <br> - ระบบบันทึกผลคำสั่ง <br> - ระบบดึงข้อมูลปัจจุบันของกล้อง เช่น ตำแหน่ง และสถานะการทำงาน <br> **S-3: รีเซ็ตระบบ** <br> - ป้อนคำสั่งรีเซ็ต (reset telescope) <br> - ระบบบันทึกผลคำสั่ง <br> - ระบบแจ้งเตือนว่าอาจมีการหยุดชั่วคราวระหว่างรีเซ็ต และขอให้ยืนยัน <br> **S-4: ปรับตำแหน่งกล้อง** <br> - ป้อนคำสั่งเปลี่ยนตำแหน่ง (set angle) <br> - ระบบบันทึกผลคำสั่ง <br> - ระบบส่งคำสั่งไปยังมอเตอร์ควบคุมกล้องเพื่อปรับตำแหน่ง |
+| **Alternate/Exceptional Flow** | - หากผู้ใช้ไม่มีสิทธิ์ ระบบจะแสดงข้อความแจ้งเตือนและบันทึกเหตุการณ์ <br> - หากคำสั่งที่ป้อนผิดพลาด ระบบจะแจ้งเตือนและให้โอกาสผู้ใช้แก้ไข <br> - หากระบบไม่สามารถดำเนินการคำสั่งได้ อาจเกิดจากปัญหาทางเทคนิค ระบบจะแจ้งเตือน Telescope Operator |
+
+
 
 
 ![ITDS361_All Diagram - 1  Install new configuration Support](https://github.com/user-attachments/assets/55e96c41-2017-4399-8d4e-f261833dc68d)
