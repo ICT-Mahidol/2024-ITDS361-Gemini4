@@ -35,3 +35,46 @@
 
 
 ![ITDS361_All Diagram - 1  Install new configuration Support](https://github.com/user-attachments/assets/55e96c41-2017-4399-8d4e-f261833dc68d)
+
+## Use Case: Access Collected Astronomical Data
+
+| Attribute         | Description |
+|------------------|-------------|
+| **Use Case Name** | Access Collected Astronomical Data |
+| **ID** | 05 |
+| **Importance Level** | High |
+| **Primary Actor** | Astronomer |
+| **Use Case Type** | Detail |
+| **Stakeholders and Interests** | - **Astronomer**: ต้องการเข้าถึงข้อมูลดาราศาสตร์ที่ถูกรวบรวมไว้ <br> - **Science Observer**: ตรวจสอบความถูกต้องของข้อมูลที่รวบรวมมา <br> - **Administrator**: จัดการสิทธิ์การเข้าถึงข้อมูลของนักดาราศาสตร์ |
+| **Brief Description** | เป็น use case การเข้าถึงข้อมูลดาราศาสตร์สำหรับ Astronomer |
+| **Trigger** | Astronomer ต้องการเข้าถึงข้อมูลที่เก็บรวบรวมไว้ |
+| **Type** | External |
+| **Relationships** | - **Association**: Astronomer |
+
+### Normal Flow of Events
+
+| Step | Description |
+|------|-------------|
+| 1 | Astronomer เข้าสู่ระบบ |
+| 2 | ระบบตรวจสอบความถูกต้องของผู้ใช้ |
+| 3 | Astronomer เลือกฟังก์ชันเข้าถึงข้อมูล |
+| 4 | Astronomer ระบุเงื่อนไขในการเข้าถึงข้อมูล (S-1, S-2, S-3) |
+| 5 | ระบบแสดงข้อมูลตามที่ระบุ |
+| 6 | Astronomer เลือกข้อมูลที่ต้องการ |
+| 7 | ระบบแสดงข้อมูลที่ถูกเลือก |
+| 8 | Astronomer สามารถดาวน์โหลดข้อมูลในระบบ |
+
+### Subflows
+
+| Subflow | Description |
+|---------|-------------|
+| **S-1: ค้นหาข้อมูลจากวันที่** | - ระบุข้อมูลวันที่ <br> - ระบบแสดงข้อมูล |
+| **S-2: ค้นหาข้อมูลจากวัตถุที่สังเกต** | - ระบุข้อมูลวัตถุที่สังเกต <br> - ระบบแสดงข้อมูล |
+| **S-3: ค้นหาข้อมูลจากกล้องโทรทรรศน์ที่ใช้** | - ระบุข้อมูลกล้องโทรทรรศน์ที่ใช้ <br> - ระบบแสดงข้อมูล |
+
+### Alternate/Exceptional Flow
+
+| Scenario | Description |
+|----------|-------------|
+| **ข้อมูลเข้าสู่ระบบไม่ถูกต้อง** | ผู้ใช้ต้องป้อนข้อมูลใหม่ |
+| **ไม่พบข้อมูลตามเงื่อนไขการค้นหา** | ระบบให้ผู้ใช้ระบุเงื่อนไขการค้นหาใหม่ |
