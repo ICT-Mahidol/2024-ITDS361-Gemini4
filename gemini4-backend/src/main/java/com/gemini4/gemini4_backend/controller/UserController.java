@@ -1,6 +1,7 @@
 package com.gemini4.gemini4_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @CrossOrigin
     @GetMapping("/")
@@ -52,7 +56,8 @@ public class UserController {
 
         // Loop through users and check username & password
         for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            String encryptedPassword = user.getPassword();
+            if (user.getUsername().equals(username) && passwordEncoder.matches(password, encryptedPassword)) {
                 System.out.println("yeah yeah");
                 return "Login successfully";
             }
@@ -110,7 +115,7 @@ public class UserController {
 
     private Astronomer setAstronomerInfo(Astronomer a, Map<String,Object> body) {
         a.setUsername(body.get("username").toString());
-        a.setPassword(body.get("password").toString());
+        a.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
         a.setRole(body.get("role").toString());
         return a;
     }
@@ -124,7 +129,7 @@ public class UserController {
 
     private ScienceObserver setScienceObserverInfo(ScienceObserver s, Map<String,Object> body) {
         s.setUsername(body.get("username").toString());
-        s.setPassword(body.get("password").toString());
+        s.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
         s.setRole(body.get("role").toString());
         return s;
     }
@@ -138,7 +143,7 @@ public class UserController {
 
     private Support setSupportInfo(Support su, Map<String,Object> body) {
         su.setUsername(body.get("username").toString());
-        su.setPassword(body.get("password").toString());
+        su.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
         su.setRole(body.get("role").toString());
         return su;
     }
@@ -152,7 +157,7 @@ public class UserController {
 
     private TelescopeOperator setTelescopeOperatorInfo(TelescopeOperator t, Map<String,Object> body) {
         t.setUsername(body.get("username").toString());
-        t.setPassword(body.get("password").toString());
+        t.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
         t.setRole(body.get("role").toString());
         return t;
     }
@@ -166,7 +171,7 @@ public class UserController {
 
     private Administrator setAdministratorInfo(Administrator ad, Map<String,Object> body) {
         ad.setUsername(body.get("username").toString());
-        ad.setPassword(body.get("password").toString());
+        ad.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
         ad.setRole(body.get("role").toString());
         return ad;
     }
