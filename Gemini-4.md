@@ -5,6 +5,7 @@
 - นายณปภัช นภัสนันท์ 6587053
 - นายธัชกร โกมลคงอยู่ 6587055
 - นายสันติภาพ โชติมานนท์ 6587105
+<<<<<<< HEAD:Gemini-4.md
 <<<<<<< Updated upstream
 =======
 
@@ -24,3 +25,5 @@
 - จากนั้น run file Gemini4BackendApplication
 - เข้าเช็ค back-end ผ่าน http://localhost:8080/
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 9560774 (Merge branch 'master' of https://github.com/ICT-Mahidol/2024-ITDS361-Gemini4):README.md
