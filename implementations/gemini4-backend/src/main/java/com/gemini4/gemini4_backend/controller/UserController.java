@@ -1,10 +1,7 @@
 package com.gemini4.gemini4_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< Updated upstream
-=======
 import org.springframework.security.crypto.password.PasswordEncoder;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +25,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-<<<<<<< Updated upstream
-=======
     @Autowired
     private PasswordEncoder passwordEncoder;
 
->>>>>>> Stashed changes
     @CrossOrigin
     @GetMapping("/")
     public @ResponseBody String welcome(){
@@ -62,19 +56,20 @@ public class UserController {
 
         // Loop through users and check username & password
         for (User user : users) {
-<<<<<<< Updated upstream
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-=======
-            String encryptedPassword = user.getPassword();
-            if (user.getUsername().equals(username) && passwordEncoder.matches(password, encryptedPassword)) {
->>>>>>> Stashed changes
-                System.out.println("yeah yeah");
-                return "Login successfully";
+            if (user.getUsername().equals(username)) {
+                String encryptedPassword = user.getPassword();
+                if (passwordEncoder.matches(password, encryptedPassword)) {
+                    System.out.println("yeah yeah");
+                    return "Login successfully";
+                } else {
+                    return "Wrong username or password";
+                }
             }
         }
 
         return "Wrong username or password";
     }
+
 
     @CrossOrigin
     @PostMapping("/register")
@@ -125,11 +120,8 @@ public class UserController {
 
     private Astronomer setAstronomerInfo(Astronomer a, Map<String,Object> body) {
         a.setUsername(body.get("username").toString());
-<<<<<<< Updated upstream
         a.setPassword(body.get("password").toString());
-=======
         a.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
->>>>>>> Stashed changes
         a.setRole(body.get("role").toString());
         return a;
     }
@@ -143,11 +135,8 @@ public class UserController {
 
     private ScienceObserver setScienceObserverInfo(ScienceObserver s, Map<String,Object> body) {
         s.setUsername(body.get("username").toString());
-<<<<<<< Updated upstream
         s.setPassword(body.get("password").toString());
-=======
         s.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
->>>>>>> Stashed changes
         s.setRole(body.get("role").toString());
         return s;
     }
@@ -161,11 +150,8 @@ public class UserController {
 
     private Support setSupportInfo(Support su, Map<String,Object> body) {
         su.setUsername(body.get("username").toString());
-<<<<<<< Updated upstream
         su.setPassword(body.get("password").toString());
-=======
         su.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
->>>>>>> Stashed changes
         su.setRole(body.get("role").toString());
         return su;
     }
@@ -179,11 +165,8 @@ public class UserController {
 
     private TelescopeOperator setTelescopeOperatorInfo(TelescopeOperator t, Map<String,Object> body) {
         t.setUsername(body.get("username").toString());
-<<<<<<< Updated upstream
         t.setPassword(body.get("password").toString());
-=======
         t.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
->>>>>>> Stashed changes
         t.setRole(body.get("role").toString());
         return t;
     }
@@ -197,11 +180,8 @@ public class UserController {
 
     private Administrator setAdministratorInfo(Administrator ad, Map<String,Object> body) {
         ad.setUsername(body.get("username").toString());
-<<<<<<< Updated upstream
         ad.setPassword(body.get("password").toString());
-=======
         ad.setPassword(this.passwordEncoder.encode(body.get("password").toString()));
->>>>>>> Stashed changes
         ad.setRole(body.get("role").toString());
         return ad;
     }
