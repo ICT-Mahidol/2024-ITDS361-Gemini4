@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Register from './components/register.jsx'
 import Home from './components/home.jsx'
+import Cli from './components/cli.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path:"home",
     element: <Home />
+  },
+  {
+    path:"home/cli",
+    element: <Cli />
   }
 ])
 
