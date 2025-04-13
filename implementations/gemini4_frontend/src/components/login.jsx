@@ -21,6 +21,12 @@ function Login(){
         await axios.post(BASE_URL+"/login",{
           username: username,
           password: password
+      },{
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
       }).then((res) => {
         console.log(res.data);
         alert(res.data)
