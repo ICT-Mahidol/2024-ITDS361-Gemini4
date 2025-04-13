@@ -1,24 +1,36 @@
 import React from "react";
 import BackButton from "./backButton";
+import axios from "axios";
+import { useState } from 'react'
+import { useEffect } from 'react'
+
+
 
 function Cli(){
+  const [command, setCommand] = useState("")
+  const [output, setOutput] = useState("")
+  const sendCommand = async () => {
+    try {
+      const res = await axios.post("http://localhost:8080/executecli", {
+        command: command,
+      }, {
+        withCredentials: true,
+      })
+      setOutput(res.data)
+    } catch (err) {
+      console.error(err)
+      setOutput(err)
+    }
+  }
+
     return (
         <>
-        <BackButton className="" onClick="/home" />
-        <div className="bg-black text-green-500 font-mono p-4 rounded-xl shadow-lg max-w-2xl mx-auto mt-10 h-full">
-        <div className="mb-2">
-          <span className="text-green-400">user@myapp</span>:<span className="text-blue-400">~</span>$ ls
+        <BackButton onClick="/home" />
+        <div className="flex items-center justify-center bg-gray-100 p-4">
+          <input type="text" value={command} onChange={(e) => setCommand(e.target.value)} placeholder="Enter command..." className="p-2 border w-120"/>
+          <button onClick={sendCommand} className="rounded-lg ml-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-800 text-white">Send </button>
         </div>
-        <div className="mb-2">
-          <span>README.md</span>&nbsp;&nbsp;<span>src</span>&nbsp;&nbsp;<span>public</span>
-        </div>
-        <div className="mb-2">
-          <span className="text-green-400">user@myapp</span>:<span className="text-blue-400">~</span>$ npm start
-        </div>
-        <div className="text-yellow-300">
-           Starting development server...
-        </div>
-      </div>
+        <div className="bg-black text-green-500 p-4 mt-4">{output}</div>
       </>
     )
 }
