@@ -12,7 +12,7 @@ import java.lang.annotation.Documented;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private String username;

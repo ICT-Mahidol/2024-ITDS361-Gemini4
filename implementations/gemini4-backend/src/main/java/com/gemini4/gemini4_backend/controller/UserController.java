@@ -10,17 +10,11 @@ import java.util.Map;
 
 import com.gemini4.gemini4_backend.model.*;
 import com.gemini4.gemini4_backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -37,7 +31,7 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")  // allow credentials for cookie
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")  // allow credentials for cookie
     @PostMapping("/login")
     public @ResponseBody String checkUser(@RequestBody Map<String, Object> body, HttpServletResponse response) {
         System.out.println(body);
@@ -52,7 +46,7 @@ public class UserController {
                 String encryptedPassword = user.getPassword();
                 if (passwordEncoder.matches(password, encryptedPassword)) {
                     // 🎯 Create a cookie
-                    Cookie userName_ = new Cookie("username", username);
+                    Cookie userName_ = new Cookie("user_name", user.getUsername());
                     userName_.setHttpOnly(true);
                     userName_.setSecure(false);
                     userName_.setPath("/");
@@ -76,7 +70,6 @@ public class UserController {
 
         return "Wrong username or password";
     }
-
 
     @CrossOrigin
     @PostMapping("/register")
