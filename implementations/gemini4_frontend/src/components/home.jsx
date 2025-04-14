@@ -3,12 +3,17 @@ import { Link } from "react-router-dom"
 import telescope from "../assets/telescope.svg"
 import configuration from "../assets/configuration.svg"
 import astronomical from "../assets/astronomical.svg"
+import Cookies from "js-cookie"
+
 function Home(){
+    const role = Cookies.get('user_role')
+
     return (
         <>
         <nav>
         <div className="flex justify-between items-center bg-white p-6 text-black">
             <h1 className="text-xl text-indigo-500 font-bold">Gemini 4</h1>
+            <h1 className="text-xl text-indigo-500 font-bold">Your role: {role}</h1>
             <div className="mx-8">
             <Link className="font-bold text-indigo hover:text-indigo-800" to="/">Logout</Link>
             </div>

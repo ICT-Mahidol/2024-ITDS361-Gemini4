@@ -9,7 +9,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true") // adjust origin as needed
-public class CommandController {
+public class TelescopeController {
 
     private OCS ocs; // 👈 Not initialized at startup
 
