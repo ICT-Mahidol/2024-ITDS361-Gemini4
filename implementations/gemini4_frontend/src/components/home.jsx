@@ -28,10 +28,10 @@ function Home(){
                 <h1 className="text-black-600">Command Line Control for Telescope Operator</h1>
             </Link>
         
-            <Link className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
+            <Link to="/home/configuration" className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
                 <img src={configuration} alt="astronomy" className="w-full h-40"/>
                 <h1 className="text-black-600 font-bold">Install New Configurations</h1>
-                <h1 className="text-black-600">Install New Configurations for Suppport</h1>
+                <h1 className="text-black-600">Install New Configurations for Support</h1>
             </Link>
 
             <Link className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">

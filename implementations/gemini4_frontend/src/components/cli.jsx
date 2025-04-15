@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 
 function Cli() {
   const [command, setCommand] = useState("");
-  const [output, setOutput] = useState("");
   const [history, setHistory] = useState([]); 
   var user = Cookies.get('user_name')
   var role = Cookies.get('user_role')
