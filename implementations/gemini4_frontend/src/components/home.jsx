@@ -34,7 +34,7 @@ function Home(){
                 <h1 className="text-black-600">Install New Configurations for Support</h1>
             </Link>
 
-            <Link className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
+            <Link to="/home/astronomical" className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
                 <img src={astronomical} alt="astronomy" className="w-full h-40"/>
                 <h1 className="text-black-600 font-bold">Access collected astronomical data</h1>
                 <h1 className="text-black-600">Access collected astronomical data for Astronomer</h1>

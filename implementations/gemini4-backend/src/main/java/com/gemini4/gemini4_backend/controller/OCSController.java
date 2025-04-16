@@ -1,15 +1,20 @@
 package com.gemini4.gemini4_backend.controller;
 
 import edu.gemini.app.ocs.OCS;
+import edu.gemini.app.ocs.example.MySciencePlan;
+import edu.gemini.app.ocs.model.AstronomicalData;
+import edu.gemini.app.ocs.model.DataProcRequirement;
+import edu.gemini.app.ocs.model.SciencePlan;
+import edu.gemini.app.ocs.model.StarSystem;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +27,8 @@ public class OCSController {
     private OCS getOCS() {
         if (ocs == null) {
             ocs = new OCS(true);
+            createSciencePlan();
+            updateSciencePlanStatus();
         }
         return ocs;
     }
@@ -92,5 +99,64 @@ public class OCSController {
         return getOCS().removeConfiguration(config_no);
     }
 
+    @PostMapping("/getastronomical")
+    public ResponseEntity<Map<String, Object>> collectAstronomicalData(@RequestBody Map<String, Integer> request) {
+        int sciplan_no = request.get("sciplan_no");
 
+        try {
+            SciencePlan sp = getOCS().getSciencePlanByNo(sciplan_no);
+            AstronomicalData astroData = getOCS().getAstronomicalData(sp);
+            System.out.println(sp);
+            if (astroData != null) {
+                ArrayList<String> images = astroData.getAstronomicalDataLinks();
+                System.out.println("Images = " + images.size());
+
+                List<String> imageUrls = new ArrayList<>();
+
+                for (String image : images) {
+                    System.out.println(image);
+                    imageUrls.add(image);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("images", imageUrls);
+                response.put("size", astroData.getAllImages().size());
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("error", "No validated science plans found."));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(Map.of("error", "Failed to process images."));
+        }
+    }
+
+    public void createSciencePlan() {
+        // Case 3: Create a new science plan
+        System.out.println("\nCase 3: Create a new science plan");
+        MySciencePlan mySP = new MySciencePlan();
+        mySP.setCreator("Morakot Choetkiertikul");
+        mySP.setSubmitter("Chaiyong Ragkhitwetsagul");
+        mySP.setFundingInUSD(1000);
+        mySP.setObjectives("To study the Auriga star system.");
+        mySP.setStarSystem(StarSystem.CONSTELLATIONS.Auriga);
+        mySP.setStartDate("22/04/2021 23:00:00");
+        mySP.setTelescopeLocation(SciencePlan.TELESCOPELOC.CHILE);
+        mySP.setEndDate("23/04/2021 02:00:00");
+        DataProcRequirement dpr1 =
+                new DataProcRequirement("JPEG", "Low", "Color mode",
+                        11, 10, 5, 0, 7, 0,
+                        0, 0, 10, 8);
+        mySP.setDataProcRequirements(dpr1);
+        // submit it to the OCS system
+        getOCS().createSciencePlan(mySP);
+        System.out.println(getOCS().getAllSciencePlans());
+    }
+
+    public void updateSciencePlanStatus() {
+        // Case 4: Update a science plan status
+        System.out.println("\nCase 4: Update a science plan status");
+        getOCS().updateSciencePlanStatus(3, SciencePlan.STATUS.COMPLETE);
+        System.out.println(getOCS().getSciencePlanByNo(3));
+    }
 }

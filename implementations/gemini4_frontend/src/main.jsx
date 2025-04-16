@@ -8,6 +8,7 @@ import Register from './components/register.jsx'
 import Home from './components/home.jsx'
 import Cli from './components/cli.jsx'
 import Configuration from './components/configuration.jsx'
+import Astronomical from './components/astronomical.jsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path:"/home/configuration",
     element: <Configuration />
+  },
+  {
+    path:"/home/astronomical",
+    element: <Astronomical />
   }
 ])
 
