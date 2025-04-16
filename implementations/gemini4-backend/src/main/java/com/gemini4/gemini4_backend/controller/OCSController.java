@@ -121,6 +121,39 @@ public class OCSController {
                 Map<String, Object> response = new HashMap<>();
                 response.put("images", imageUrls);
                 response.put("size", astroData.getAllImages().size());
+                Map<String, Object> spDetails = new HashMap<>();
+                spDetails.put("planNo", sp.getPlanNo());
+                spDetails.put("creator", sp.getCreator());
+                spDetails.put("submitter", sp.getSubmitter());
+                spDetails.put("fundingInUSD", sp.getFundingInUSD());
+                spDetails.put("objectives", sp.getObjectives());
+                spDetails.put("starSystem", sp.getStarSystem());
+                spDetails.put("startDate", sp.getStartDate());
+                spDetails.put("endDate", sp.getEndDate());
+                spDetails.put("telescopeLocation", sp.getTelescopeLocation());
+                spDetails.put("status", sp.getStatus());
+
+                if (!sp.getDataProcRequirements().isEmpty()) {
+                    DataProcRequirement dpr = sp.getDataProcRequirements().get(0);
+                    Map<String, Object> dprDetails = new HashMap<>();
+                    dprDetails.put("fileType", dpr.getFileType());
+                    dprDetails.put("fileQuality", dpr.getFileQuality());
+                    dprDetails.put("colorType", dpr.getColorType());
+                    dprDetails.put("contrast", dpr.getContrast());
+                    dprDetails.put("brightness", dpr.getBrightness());
+                    dprDetails.put("saturation", dpr.getSaturation());
+                    dprDetails.put("highlights", dpr.getHighlights());
+                    dprDetails.put("exposure", dpr.getExposure());
+                    dprDetails.put("shadows", dpr.getShadows());
+                    dprDetails.put("whites", dpr.getWhites());
+                    dprDetails.put("blacks", dpr.getBlacks());
+                    dprDetails.put("luminance", dpr.getLuminance());
+                    dprDetails.put("hue", dpr.getHue());
+
+                    spDetails.put("dataProcRequirement", dprDetails);
+                }
+                response.put("sciencePlan", spDetails);
+
                 return ResponseEntity.ok(response);
             } else {
                 return ResponseEntity.badRequest().body(Map.of("error", "No validated science plans found."));

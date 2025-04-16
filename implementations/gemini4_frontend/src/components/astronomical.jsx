@@ -8,6 +8,7 @@ function Astronomical() {
     const [planno, setPlanno] = React.useState("")
     const [isFetching, setIsFetching] = useState(false)
     const [images, setImages] = useState([])
+    const [sciencePlan, setSciencePlan] = useState(null);
 
     const user = Cookies.get("user_name")
     const role = Cookies.get("user_role")
@@ -29,6 +30,7 @@ function Astronomical() {
             });
             console.log(response.data);
             if (response.data?.images && Array.isArray(response.data.images)) {
+                setSciencePlan(response.data.sciencePlan);
                 setImages(response.data.images)
             } else {
                 alert("No images found in response.")
@@ -75,6 +77,21 @@ function Astronomical() {
       </div>
 
         <div className="bg-gray-100 min-h-screen p-4">
+                {sciencePlan && (
+            <div className="flex flex-col bg-gray-100 max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg space-y-4">
+                <h1 className="text-2xl font-bold text-gray-800 text-center">Science Plan</h1>
+                <p className="text-gray-800"><strong>Plan No:</strong> {sciencePlan.planNo}</p>
+                <p className="text-gray-800"><strong>Creator:</strong> {sciencePlan.creator}</p>
+                <p className="text-gray-800"><strong>Submitter:</strong> {sciencePlan.submitter}</p>
+                <p className="text-gray-800"><strong>Funding (USD):</strong> {sciencePlan.fundingInUSD}</p>
+                <p className="text-gray-800"><strong>Objectives:</strong> {sciencePlan.objectives}</p>
+                <p className="text-gray-800"><strong>Star System:</strong> {sciencePlan.starSystem}</p>
+                <p className="text-gray-800"><strong>Start:</strong> {sciencePlan.startDate}</p>
+                <p className="text-gray-800"><strong>End:</strong> {sciencePlan.endDate}</p>
+                <p className="text-gray-800"><strong>Location:</strong> {sciencePlan.telescopeLocation}</p>
+                <p className="text-gray-800"><strong>Status:</strong> {sciencePlan.status}</p>
+            </div>
+        )}
                 <div className="flex flex-wrap justify-center">
                         {images.length > 0 ? (
                     images.map((url, index) => (
