@@ -6,7 +6,7 @@ import edu.gemini.app.ocs.model.AstronomicalData;
 import edu.gemini.app.ocs.model.DataProcRequirement;
 import edu.gemini.app.ocs.model.SciencePlan;
 import edu.gemini.app.ocs.model.StarSystem;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.List;
 
@@ -213,9 +214,107 @@ public class OCSController {
         }
     }
 
+//    @PostMapping("/astrodatadownload")
+//    public Image getImage(@RequestBody Map<String, String> request) {
+//        try{
+//            String url = request.get("url");
+//            int sciplan_no = Integer.parseInt(request.get("spno"));
+//            SciencePlan sp = getOCS().getSciencePlanByNo(sciplan_no);
+//            AstronomicalData astroData = getOCS().getAstronomicalData(sp);
+//            Method downloadMethod = AstronomicalData.class.getDeclaredMethod("downloadImage", String.class);
+//            downloadMethod.setAccessible(true); // Make the private method accessible
+//            System.out.println("Download is working");
+//            return (Image) downloadMethod.invoke(astroData, url);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+//    @PostMapping("/astrodatadownload")
+//    public ResponseEntity<byte[]> getImage(@RequestBody Map<String, String> request) {
+//        try {
+//            String url = request.get("url");
+//            int sciplan_no = Integer.parseInt(request.get("spno"));
+//            SciencePlan sp = getOCS().getSciencePlanByNo(sciplan_no);
+//            AstronomicalData astroData = getOCS().getAstronomicalData(sp);
+//
+//            Method downloadMethod = AstronomicalData.class.getDeclaredMethod("downloadImage", String.class);
+//            downloadMethod.setAccessible(true);
+//
+//            // Download image (as a Java Image)
+//            Image image = (Image) downloadMethod.invoke(astroData, url);
+//
+//            // Convert Image to BufferedImage
+//            BufferedImage bufferedImage = new BufferedImage(
+//                    image.getWidth(null),
+//                    image.getHeight(null),
+//                    BufferedImage.TYPE_INT_RGB
+//            );
+//            bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+//
+//            // Convert to byte array
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ImageIO.write(bufferedImage, "png", baos);
+//            byte[] imageBytes = baos.toByteArray();
+//
+//            // Build HTTP response
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.IMAGE_PNG);
+//            headers.setContentDisposition(ContentDisposition.builder("attachment")
+//                    .filename("astrodata.png")
+//                    .build());
+//
+//            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+
+    @PostMapping("/astrodatadownload")
+    public ResponseEntity<byte[]> getImage(@RequestBody Map<String, String> request) {
+        try {
+            String url = request.get("url");
+            int sciplan_no = Integer.parseInt(request.get("spno"));
+            SciencePlan sp = getOCS().getSciencePlanByNo(sciplan_no);
+            AstronomicalData astroData = getOCS().getAstronomicalData(sp);
+
+            Method downloadMethod = AstronomicalData.class.getDeclaredMethod("downloadImage", String.class);
+            downloadMethod.setAccessible(true);
+
+            // Download image (as a Java Image)
+            Image image = (Image) downloadMethod.invoke(astroData, url);
+
+            // Convert Image to BufferedImage
+            BufferedImage bufferedImage = new BufferedImage(
+                    image.getWidth(null),
+                    image.getHeight(null),
+                    BufferedImage.TYPE_INT_RGB
+            );
+            bufferedImage.getGraphics().drawImage(image, 0, 0, null);
+
+            // Convert to byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            // Build HTTP response
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            headers.setContentDisposition(ContentDisposition.builder("attachment")
+                    .filename("astrodata.png")
+                    .build());
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     public void createSciencePlan() {
-        // Case 3: Create a new science plan
-        System.out.println("\nCase 3: Create a new science plan");
         MySciencePlan mySP = new MySciencePlan();
         mySP.setCreator("Morakot Choetkiertikul");
         mySP.setSubmitter("Chaiyong Ragkhitwetsagul");
@@ -236,8 +335,6 @@ public class OCSController {
     }
 
     public void updateSciencePlanStatus() {
-        // Case 4: Update a science plan status
-        System.out.println("\nCase 4: Update a science plan status");
         getOCS().updateSciencePlanStatus(3, SciencePlan.STATUS.COMPLETE);
         System.out.println(getOCS().getSciencePlanByNo(3));
     }

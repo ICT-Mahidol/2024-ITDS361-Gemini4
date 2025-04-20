@@ -140,6 +140,60 @@
                                 
                             };
 
+                            // // download astronomical data
+                            // const astro_download = async (url, spno) => {
+                            //     setIsFetching(true);
+
+                            //     try {
+                            //         const response = await axios.post(`http://localhost:8080/api/astrodatadownload`, {
+                            //             url:url,
+                            //             spno:spno
+                            //         }, {
+                            //             withCredentials: true,
+                            //         });
+
+                            //         // console.log(response.data);
+                            //         setSearchResults(response.data);
+                            //         alert("Download Image successfully");
+                            //     } catch (error) {
+                            //         console.error(error);
+                            //         alert("Can't download Image");
+                            //     }
+
+                            //     setIsFetching(false);
+                                
+                            // };
+
+const astro_download = async (url, spno) => {
+    setIsFetching(true);
+
+    try {
+        const response = await axios.post(`http://localhost:8080/api/astrodatadownload`, {
+            url: url,
+            spno: spno
+        }, {
+            responseType: 'blob', // Important: This tells axios to treat the response as a Blob (binary data)
+            withCredentials: true,
+        });
+
+        // Create a URL for the Blob (image)
+        const blob = response.data;
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'astrodata.png';  // Specify the default filename for download
+        link.click();  // Trigger the download
+
+        alert("Download Image successfully");
+
+    } catch (error) {
+        console.error(error);
+        alert("Can't download Image");
+    }
+
+    setIsFetching(false);
+};
+
+
                             const search_location = () => {
                                 setSearchType("location");
                             };
@@ -202,9 +256,18 @@
                                         <div className="flex flex-wrap justify-center">
                                                 {images.length > 0 ? (
                                             images.map((url, index) => (
-                                            <div key={index} className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
-                                                <img src={url} alt={`astronomy-${index}`} className="w-full h-full object-cover"/>
-                                            </div>
+                                                <div key={index} className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
+                                                <img src={url} alt={`astronomy-${index}`} className="w-full h-64 object-cover rounded-md" />
+                                                <div className="mt-4 flex justify-end">
+                                                <p className="text-gray-800">{url}</p>
+                                                  <button
+                                                    onClick={() => astro_download(url, sciencePlan.planNo)} 
+                                                    className="rounded-lg px-4 py-2 bg-indigo-600 hover:bg-indigo-800 text-white border border-indigo-800"
+                                                  >
+                                                    Download
+                                                  </button>
+                                                </div>
+                                              </div>
                                             ))
                                         
                                         ) : (
