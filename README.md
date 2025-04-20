@@ -16,7 +16,7 @@
 - จากนั้นทดสอบการเข้าใช้ user ผ่านการ login
 
 ## Back-end
-- เข้าไปยัง folder gemini4-backend
+- เข้าไปยัง folder gemini4-backend ด้วยคำสั่ง cd .\implementations\gemini4-backend\
 - ทำการ set project structure เป็น sdk corretto-17
 - ทำการ set application.properties ในส่วนของ spring.datasource.url=jdbc:h2:file:<"ตามด้วย full path ของ folder gemini4-backend">users.db
 - จากนั้น run file Gemini4BackendApplication
