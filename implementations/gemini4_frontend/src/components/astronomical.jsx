@@ -1,19 +1,32 @@
-import React, { use } from "react";
+import React from "react";
 import BackButton from "./backButton";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 function Astronomical() {
-    const [planno, setPlanno] = React.useState("")
+    const [planno, setPlanno] = useState("")
     const [isFetching, setIsFetching] = useState(false)
     const [images, setImages] = useState([])
     const [sciencePlan, setSciencePlan] = useState(null);
+    const [sp, setSp] = useState([]);
 
     const user = Cookies.get("user_name")
     const role = Cookies.get("user_role")
     console.log("User: " + user)
     console.log("Role: " + role)
+
+    const callSp = async () => {
+        await axios.get("http://localhost:8080/api/getallsp")
+        .then((response2) => {
+        setSp(response2.data);
+        console.log(response2.data)
+        })
+    }
+
+    useEffect(() => {
+        callSp();
+    }, []);
 
     const handleChange = async () => {
         setIsFetching(true); // Start loading
@@ -99,7 +112,23 @@ function Astronomical() {
                         <img src={url} alt={`astronomy-${index}`} className="w-full h-full object-cover"/>
                     </div>
                     ))
-                ) : ( <p className="text-center text-gray-600 mt-12">No astronomical data to display yet.</p>)}
+                ) : (
+                    <div className="max-w-4xl mx-auto mt-10">
+      <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">Science Plans</h1>
+
+      {sp.map((sp, index) => (
+        <div
+          key={index}
+          className="flex flex-col bg-white border border-gray-200 rounded-xl shadow-md p-6 mb-6 space-y-2"
+        >
+          <p><strong>Science Plan:</strong> {sp.planNo}</p>
+          <p><strong>Submitter:</strong> {sp.submitter}</p>
+          <p><strong>Objectives:</strong> {sp.objectives}</p>
+          <p><strong>Star System:</strong> {sp.starSystem}</p>
+        </div>
+      ))}
+    </div>
+                )}
                 </div>
             </div>
         </>

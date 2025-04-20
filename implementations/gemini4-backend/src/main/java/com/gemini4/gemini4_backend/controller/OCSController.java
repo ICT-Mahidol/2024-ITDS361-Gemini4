@@ -99,6 +99,12 @@ public class OCSController {
         return getOCS().removeConfiguration(config_no);
     }
 
+    @RequestMapping("/getallsp")
+    public ArrayList<SciencePlan> getAllSciencePlans() {
+        System.out.println(getOCS().getAllSciencePlans());
+        return getOCS().getAllSciencePlans();
+    }
+
     @PostMapping("/getastronomical")
     public ResponseEntity<Map<String, Object>> collectAstronomicalData(@RequestBody Map<String, Integer> request) {
         int sciplan_no = request.get("sciplan_no");
