@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -103,6 +105,47 @@ public class OCSController {
     public ArrayList<SciencePlan> getAllSciencePlans() {
         System.out.println(getOCS().getAllSciencePlans());
         return getOCS().getAllSciencePlans();
+    }
+
+    @PostMapping("/getspbylocation")
+    public ArrayList<SciencePlan> getSciencePlanByLocation(@RequestBody Map<String, String> request) {
+        String location = request.get("location");
+        ArrayList<SciencePlan> allPlans = getOCS().getAllSciencePlans();
+        ArrayList<SciencePlan> result= new ArrayList<>();
+        for (SciencePlan sp : allPlans) {
+            if (sp.getTelescopeLocation().toString().equals(location)) {
+                result.add(sp);
+            }
+        }
+        return result;
+    }
+
+    @PostMapping("/getspbydate")
+    public ArrayList<SciencePlan> getSciencePlanByDate(@RequestBody Map<String, String> request) {
+        String date = request.get("date");
+        ArrayList<SciencePlan> allPlans = getOCS().getAllSciencePlans();
+        ArrayList<SciencePlan> result= new ArrayList<>();
+        for (SciencePlan sp : allPlans) {
+            String startDate = sp.getStartDate().toString().split(" ")[0];
+            String endDate = sp.getEndDate().toString().split(" ")[0];
+            if (startDate.equals(date) || endDate.equals(date)) {
+                result.add(sp);
+            }
+        }
+        return result;
+    }
+
+    @PostMapping("/getspbystar")
+    public ArrayList<SciencePlan> getSciencePlanByStarSystem(@RequestBody Map<String, String> request) {
+        String star = request.get("star");
+        ArrayList<SciencePlan> allPlans = getOCS().getAllSciencePlans();
+        ArrayList<SciencePlan> result= new ArrayList<>();
+        for (SciencePlan sp : allPlans) {
+            if (sp.getStarSystem().toString().equals(star)) {
+                result.add(sp);
+            }
+        }
+        return result;
     }
 
     @PostMapping("/getastronomical")
