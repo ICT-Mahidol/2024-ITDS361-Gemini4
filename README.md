@@ -22,5 +22,5 @@
 - จากนั้น run file Gemini4BackendApplication
 - เข้าเช็ค back-end ผ่าน http://localhost:8080/
 ## Design Pattern
-UserFactory ใช้ Factory Design Pattern ที่มีการสร้าง object จาก role ที่รับมาจากการ Register ของผู้ใช้
+Factory Design Pattern ใน class UserFactory ที่มีการสร้าง object จาก role ที่รับมาจากการ Register ของผู้ใช้
 เหตุผลที่เลือกใช้ เพราะ ในระบบ Gemini จำเป็นต้องรองรับผู้ใช้ในหลาย role และมีความจำเป็นต้องสร้าง instance ของ User ในแต่ละ role ตอนทำการ Register Factory method จึงช่วยลดความซ้ำซ้อนของโค้ดในส่วน UserController นอกจากนี้ยังช่วยรองรับหากมีความจำเป็นต้องเพิ่ม role อื่น ๆ เพิ่มเติมในอนาคตยังสามารถเข้ามาเพิ่ม role ใน method นี้ได้ทันที
