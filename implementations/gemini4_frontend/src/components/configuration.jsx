@@ -7,6 +7,8 @@ function Configuration() {
   const [configName, setConfigName] = useState("")
   const [configNo, setConfigNo] = useState("")
   const [configData, setConfigData] = useState("")
+  const [showModal, setShowModal] = useState(false);
+  const [tempConfigName, setTempConfigName] = useState("");
 
   const user = Cookies.get("user_name")
   const role = Cookies.get("user_role")
@@ -63,6 +65,24 @@ function Configuration() {
       })
   }
 
+  
+  const downloadJsonFile = (data, filename) => {
+    const jsonStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonStr], {
+       type: "application/json" }
+      );
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement("a")
+    link.href = url;
+    link.download = filename || "data.json"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+
   return (
     <>
       <BackButton onClick="/home" />
@@ -78,7 +98,7 @@ function Configuration() {
 
         {/* Install Configuration */}
         <div className="flex flex-col sm:flex-row gap-4 items-center">
-          <input
+          {/* <input
             type="text"
             placeholder="Enter new configuration"
             value={configName}
@@ -88,16 +108,38 @@ function Configuration() {
             onClick={handleInstall}
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">
             Install new configuration
+          </button> */}
+          <div className="flex justify-start">
+          <button onClick={() => setShowModal(true)} className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">Install new configuration
           </button>
+            {showModal && (
+            <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+                <h2 className="text-xl font-semibold mb-4">Enter configuration name</h2>
+                <input
+                  type="text"
+                  placeholder="Configuration name"
+                  value={configName}
+                  onChange={(e) => setConfigName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+                <div className="flex justify-end gap-4">
+                  <button onClick={handleInstall} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">OK </button>
+                  <button onClick={() => { setConfigName(""); setShowModal(false);}} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Cancel</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         </div>
 
-        {/* Remove Configuration */}
+        {/* Download */}
         <div className="flex flex-col sm:flex-row gap-4 items-center">
-          <input type="text" placeholder="Configuration No." value={configNo} onChange={(e) => setConfigNo(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"/>
-          <button onClick={handleRemove} className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
-            Remove configuration
+          <button onClick={() => downloadJsonFile(configData, "config.json")} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all">
+            Download current configuration
           </button>
         </div>
+        
         </div>
     </>
   );

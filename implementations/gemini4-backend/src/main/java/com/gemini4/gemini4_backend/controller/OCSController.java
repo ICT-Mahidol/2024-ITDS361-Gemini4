@@ -34,17 +34,17 @@ public class OCSController {
     }
 
 //  Execute command line
-    @PostMapping("/execute")
-    public ResponseEntity<String> executeCommand(@RequestBody Map<String, String> request) {
-        String command = request.get("command");
-
-        if (command == null || command.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Command cannot be empty.");
-        }
-
-        String result = getOCS().executeCommand(command.trim());
-        return ResponseEntity.ok(result);
-    }
+//    @PostMapping("/execute")
+//    public ResponseEntity<String> executeCommand(@RequestBody Map<String, String> request) {
+//        String command = request.get("command");
+//
+//        if (command == null || command.trim().isEmpty()) {
+//            return ResponseEntity.badRequest().body("Command cannot be empty.");
+//        }
+//
+//        String result = getOCS().executeCommand(command.trim());
+//        return ResponseEntity.ok(result);
+//    }
 
 //  Get Configuration
     @GetMapping("/getconfig")
@@ -76,7 +76,7 @@ public class OCSController {
     @PostMapping("/installconfig")
     public ResponseEntity<?> installConfig(@RequestBody Map<String, String> request) {
         String config_name = request.get("config_name");
-
+        getOCS().removeConfiguration(1);
         if (config_name == null || config_name.trim().isEmpty()) {
             return ResponseEntity
                     .badRequest()

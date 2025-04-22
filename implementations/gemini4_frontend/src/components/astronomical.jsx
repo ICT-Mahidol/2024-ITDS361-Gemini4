@@ -259,7 +259,7 @@ const astro_download = async (url, spno) => {
                                                 <div key={index} className="bg-white mx-8 p-4 rounded-lg shadow-md w-1/3 mt-24 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 border-2 border-solid hover:border-indigo-800">
                                                 <img src={url} alt={`astronomy-${index}`} className="w-full h-64 object-cover rounded-md" />
                                                 <div className="mt-4 flex justify-end">
-                                                <p className="text-gray-800">{url}</p>
+                                                {/* <p className="text-gray-800">{url}</p> */}
                                                   <button
                                                     onClick={() => astro_download(url, sciencePlan.planNo)} 
                                                     className="rounded-lg px-4 py-2 bg-indigo-600 hover:bg-indigo-800 text-white border border-indigo-800"
