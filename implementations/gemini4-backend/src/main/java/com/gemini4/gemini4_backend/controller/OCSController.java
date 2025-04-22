@@ -2,10 +2,7 @@ package com.gemini4.gemini4_backend.controller;
 
 import edu.gemini.app.ocs.OCS;
 import edu.gemini.app.ocs.example.MySciencePlan;
-import edu.gemini.app.ocs.model.AstronomicalData;
-import edu.gemini.app.ocs.model.DataProcRequirement;
-import edu.gemini.app.ocs.model.SciencePlan;
-import edu.gemini.app.ocs.model.StarSystem;
+import edu.gemini.app.ocs.model.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,18 +51,12 @@ public class OCSController {
     public List<Map<String, String>> getConfig() {
         List<Map<String, String>> result = new ArrayList<>();
 
-        // Redirect System.out to a ByteArrayOutputStream
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
-
-        // Call the method — it will print to outContent instead of console
         getOCS().getConfigurations();
-
-        // Reset System.out back
         System.setOut(originalOut);
 
-        // Parse the captured output line by line
         String[] lines = outContent.toString().split("\\r?\\n");
         for (String line : lines) {
             if (line.contains(":")) {
