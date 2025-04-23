@@ -76,7 +76,7 @@ public class OCSController {
     @PostMapping("/installconfig")
     public ResponseEntity<?> installConfig(@RequestBody Map<String, String> request) {
         String config_name = request.get("config_name");
-        getOCS().removeConfiguration(1);
+
         if (config_name == null || config_name.trim().isEmpty()) {
             return ResponseEntity
                     .badRequest()
