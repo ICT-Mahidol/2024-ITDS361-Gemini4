@@ -3,6 +3,7 @@ package com.gemini4.gemini4_backend.controller;
 import edu.gemini.app.ocs.OCS;
 import edu.gemini.app.ocs.example.MySciencePlan;
 import edu.gemini.app.ocs.model.*;
+import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +11,15 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -29,69 +34,99 @@ public class OCSController {
             ocs = new OCS(true);
             createSciencePlan();
             updateSciencePlanStatus();
+
         }
         return ocs;
     }
 
 //  Execute command line
-//    @PostMapping("/execute")
-//    public ResponseEntity<String> executeCommand(@RequestBody Map<String, String> request) {
-//        String command = request.get("command");
-//
-//        if (command == null || command.trim().isEmpty()) {
-//            return ResponseEntity.badRequest().body("Command cannot be empty.");
-//        }
-//
-//        String result = getOCS().executeCommand(command.trim());
-//        return ResponseEntity.ok(result);
-//    }
+    @PostMapping("/execute")
+    public ResponseEntity<String> executeCommand(@RequestBody Map<String, String> request) {
+        String command = request.get("command");
 
-//  Get Configuration
-    @GetMapping("/getconfig")
-    public List<Map<String, String>> getConfig() {
-        List<Map<String, String>> result = new ArrayList<>();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
-        System.setOut(new PrintStream(outContent));
-        getOCS().getConfigurations();
-        System.setOut(originalOut);
-
-        String[] lines = outContent.toString().split("\\r?\\n");
-        for (String line : lines) {
-            if (line.contains(":")) {
-                String[] parts = line.split(":", 2);
-                Map<String, String> entry = new HashMap<>();
-                entry.put("id", parts[0].trim());
-                entry.put("name", parts[1].trim());
-                result.add(entry);
-            }
+        if (command == null || command.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Command cannot be empty.");
         }
 
-        return result;
-    }
-
-
-//  Install Configuration
-    @PostMapping("/installconfig")
-    public ResponseEntity<?> installConfig(@RequestBody Map<String, String> request) {
-        String config_name = request.get("config_name");
-
-        if (config_name == null || config_name.trim().isEmpty()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Configuration name must not be null or empty.");
-        }
-
-        Boolean result = getOCS().addConfiguration(config_name.trim());
+        String result = getOCS().executeCommand(command.trim());
         return ResponseEntity.ok(result);
     }
 
-//  Remove Configuration by No.
-    @RequestMapping("/removeconfig/{config_no}")
-    public Boolean removeConfig(@PathVariable("config_no") int config_no) {
-        return getOCS().removeConfiguration(config_no);
+//  Get Configuration
+//    @GetMapping("/getconfig")
+//    public List<Map<String, String>> getConfig() {
+//        List<Map<String, String>> result = new ArrayList<>();
+//
+//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+//        PrintStream originalOut = System.out;
+//        System.setOut(new PrintStream(outContent));
+//        getOCS().getConfigurations();
+//        System.setOut(originalOut);
+//
+//        String[] lines = outContent.toString().split("\\r?\\n");
+//        for (String line : lines) {
+//            if (line.contains(":")) {
+//                String[] parts = line.split(":", 2);
+//                Map<String, String> entry = new HashMap<>();
+//                entry.put("id", parts[0].trim());
+//                entry.put("name", parts[1].trim());
+//                result.add(entry);
+//            }
+//        }
+//
+//        return result;
+//    }
+
+
+////  Install Configuration
+//    @PostMapping("/installconfig")
+//    public ResponseEntity<?> installConfig(@RequestBody Map<String, String> request) {
+//        String config_name = request.get("config_name");
+//
+//        if (config_name == null || config_name.trim().isEmpty()) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body("Configuration name must not be null or empty.");
+//        }
+//
+//        Boolean result = getOCS().addConfiguration(config_name.trim());
+//        return ResponseEntity.ok(result);
+//    }
+//
+////  Remove Configuration by No.
+//    @RequestMapping("/removeconfig/{config_no}")
+//    public Boolean removeConfig(@PathVariable("config_no") int config_no) {
+//        return getOCS().removeConfiguration(config_no);
+//    }
+
+    @GetMapping(value = "/get_default_config", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getConfig() {
+        try {
+            String workingDir = System.getProperty("user.dir");
+            File defaultFile = new File(workingDir, "/references/gemini_config_default.json");
+
+            if (!defaultFile.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Read JSON text
+            String jsonText = Files.lines(Paths.get(defaultFile.getAbsolutePath()))
+                    .collect(Collectors.joining("\n"));
+
+            // Validate it is valid JSON (optional but good)
+            JSONObject json = new JSONObject(jsonText);
+
+            // Return it as ResponseEntity with JSON content type
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(json.toString(4)); // pretty print 4 spaces
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("{\"error\": \"Failed to read config\"}");
+        }
     }
+
 
     @RequestMapping("/getallsp")
     public ArrayList<SciencePlan> getAllSciencePlans() {
