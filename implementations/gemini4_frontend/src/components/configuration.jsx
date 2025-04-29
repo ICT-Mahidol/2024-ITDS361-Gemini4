@@ -3,13 +3,13 @@ import BackButton from "./backButton";
 import Cookies from "js-cookie";
 
 function Configuration() {
-  const [loading, setLoading] = useState(false);
-  const [configData, setConfigData] = useState(null);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [configData, setConfigData] = useState(null)
+  const [error, setError] = useState("")
 
-  const user = Cookies.get("user_name");
-  const role = Cookies.get("user_role");
-  console.log("Role:", role);
+  const user = Cookies.get("user_name")
+  const role = Cookies.get("user_role")
+  console.log("Role:", role)
 
   // Fetch configuration on page load
   useEffect(() => {
@@ -17,10 +17,10 @@ function Configuration() {
   }, []);
 
   const fetchConfig = async () => {
-    setLoading(true);
+    setLoading(true)
     setError(""); // Reset error
     try {
-      const response = await fetch("http://localhost:8080/api/get_default_config", {
+      const response = await fetch("http://localhost:8080/get_default_config", {
         credentials: 'include',
       });
 
@@ -32,14 +32,13 @@ function Configuration() {
       setConfigData(data);
       console.log("Fetched config:", data)
     } catch (error) {
-      console.error(error)
+      console.error(error);
       setError("Failed to load configuration.")
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
-  // Download current configuration
   const handleDownload = () => {
     if (!configData) {
       console.error("No configuration to download!")
@@ -52,7 +51,7 @@ function Configuration() {
 
     const link = document.createElement('a')
     link.href = url;
-    link.setAttribute('download', 'gemini_config_current.json');
+    link.setAttribute('download', 'gemini_config_current.json')
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -60,24 +59,50 @@ function Configuration() {
     URL.revokeObjectURL(url); // Clean up
   };
 
-  // Upload and replace configuration
   const handleFileChange = (event) => {
     const file = event.target.files[0]
     if (!file) return;
 
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const parsedJson = JSON.parse(e.target.result)
         setConfigData(parsedJson)
         setError("")
         console.log("Uploaded and replaced configuration:", parsedJson)
+
+        // Call API to update config
+        await uploadConfig(parsedJson)
       } catch (error) {
         console.error("Invalid JSON file:", error)
-        setError("The provided Gemini configuration is in a wrong format. Please reupload a correctly formatted file.")
+        setError("The provided Gemini configuration is in a wrong format. Please reupload a correctly formatted file.");
       }
     };
-    reader.readAsText(file)
+    reader.readAsText(file);
+  };
+
+  const uploadConfig = async (jsonData) => {
+    try {
+      const response = await fetch("http://localhost:8080/update_config", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jsonData)
+      });
+
+      if (!response.ok) throw new Error("Failed to upload configuration");
+
+      const message = await response.text()
+      console.log(message)
+      alert("Configuration updated successfully!")
+
+      // หลัง update เรียก fetch ใหม่อีกที
+      fetchConfig();
+    } catch (error) {
+      console.error(error);
+      setError("Upload failed.");
+    }
   };
 
   return (
@@ -90,7 +115,8 @@ function Configuration() {
             disabled={!configData}
             className={`px-6 py-2 text-white rounded-lg transition-all ${
               configData ? "bg-green-600 hover:bg-green-700" : "bg-gray-400 cursor-not-allowed"
-            }`}>
+            }`}
+          >
             Download Current Configuration
           </button>
 
@@ -100,7 +126,8 @@ function Configuration() {
               type="file"
               accept=".json"
               onChange={handleFileChange}
-              className="hidden" />
+              className="hidden"
+            />
           </label>
         </div>
 
