@@ -8,6 +8,7 @@
 
 ## Gemini Deliverable 4
 ## Front-end
+- !prerequisite: ถูกพัฒนาด้วย Vite React จึงจำเป็นต้องติดตั้ง Node.js และ NPM เครื่องก่อน
 - เข้าผ่าน terminal แล้ว cd ไปยัง folder gemini4_frontend ด้วยคำสั่ง cd .\implementations\gemini4_frontend\
 - จากนั้น npm i เพื่อเรียก library ที่จำเป็น
 - แล้วจึง npm run dev เพื่อเริ่มต้นการทำงาน
